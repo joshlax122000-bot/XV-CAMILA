@@ -16,9 +16,9 @@
     --dark: #2a1f1a;
     --text: #4a3728;
   }
-
+ 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
   body {
     min-height: 100vh;
     background-color: var(--cream);
@@ -26,7 +26,7 @@
     color: var(--text);
     overflow-x: hidden;
   }
-
+ 
   /* Animated background */
   body::before {
     content: '';
@@ -38,7 +38,7 @@
       radial-gradient(ellipse at 50% 50%, rgba(253,248,242,1) 0%, transparent 100%);
     z-index: -1;
   }
-
+ 
   /* Floating petals */
   .petal {
     position: fixed;
@@ -61,14 +61,14 @@
   .petal:nth-child(8)  { left: 85%; animation-duration: 10s; animation-delay: 2.5s; background: linear-gradient(135deg, var(--gold-light), var(--gold)); }
   .petal:nth-child(9)  { left: 92%; animation-duration: 7s;  animation-delay: 6s; }
   .petal:nth-child(10) { left: 45%; animation-duration: 9s;  animation-delay: 7s;   width:5px; height:6px; }
-
+ 
   @keyframes fall {
     0%   { opacity: 0; transform: translateY(-20px) rotate(0deg); }
     10%  { opacity: 0.7; }
     90%  { opacity: 0.5; }
     100% { opacity: 0; transform: translateY(100vh) rotate(360deg) translateX(30px); }
   }
-
+ 
   /* Main container */
   .container {
     position: relative;
@@ -80,7 +80,7 @@
     flex-direction: column;
     align-items: center;
   }
-
+ 
   /* Decorative top ornament */
   .ornament {
     display: flex;
@@ -104,7 +104,7 @@
     background: var(--gold);
     transform: rotate(45deg);
   }
-
+ 
   /* Header */
   .header {
     text-align: center;
@@ -112,7 +112,7 @@
     opacity: 0;
     animation: fadeUp 1s ease 0.4s forwards;
   }
-
+ 
   .xv-label {
     font-family: 'Montserrat', sans-serif;
     font-size: 11px;
@@ -122,7 +122,7 @@
     color: var(--gold-dark);
     margin-bottom: 8px;
   }
-
+ 
   .name {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(52px, 12vw, 80px);
@@ -136,7 +136,7 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-
+ 
   .subtitle {
     font-family: 'Cormorant Garamond', serif;
     font-size: 16px;
@@ -144,7 +144,7 @@
     color: var(--gold-dark);
     letter-spacing: 2px;
   }
-
+ 
   /* Decorative divider */
   .divider {
     display: flex;
@@ -164,7 +164,7 @@
     font-size: 18px;
     color: var(--rose-dark);
   }
-
+ 
   /* Upload card */
   .card {
     background: rgba(255,255,255,0.85);
@@ -179,7 +179,7 @@
     opacity: 0;
     animation: fadeUp 1s ease 0.8s forwards;
   }
-
+ 
   .card-message {
     text-align: center;
     margin-bottom: 28px;
@@ -191,9 +191,10 @@
     color: var(--text);
     opacity: 0.8;
   }
-
+ 
   /* Drop zone */
   .drop-zone {
+    display: block;
     border: 2px dashed rgba(201,169,110,0.5);
     border-radius: 16px;
     padding: 40px 24px;
@@ -203,6 +204,7 @@
     background: rgba(253,248,242,0.5);
     position: relative;
     overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
   }
   .drop-zone::before {
     content: '';
@@ -220,7 +222,7 @@
     transform: translateY(-2px);
     box-shadow: 0 8px 32px rgba(201,169,110,0.2);
   }
-
+ 
   .drop-icon {
     font-size: 40px;
     margin-bottom: 12px;
@@ -231,7 +233,7 @@
     0%, 100% { transform: translateY(0); }
     50%       { transform: translateY(-6px); }
   }
-
+ 
   .drop-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 20px;
@@ -246,7 +248,7 @@
     opacity: 0.6;
     margin-bottom: 16px;
   }
-
+ 
   .btn-select {
     display: inline-block;
     padding: 10px 28px;
@@ -268,16 +270,16 @@
     box-shadow: 0 6px 24px rgba(154,122,69,0.45);
   }
   .btn-select:active { transform: translateY(0); }
-
+ 
   #file-input { display: none; }
-
+ 
   /* Preview grid */
   .preview-section {
     margin-top: 24px;
     display: none;
   }
   .preview-section.visible { display: block; }
-
+ 
   .preview-label {
     font-size: 11px;
     font-weight: 500;
@@ -287,14 +289,14 @@
     margin-bottom: 12px;
     text-align: center;
   }
-
+ 
   .preview-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     margin-bottom: 20px;
   }
-
+ 
   .preview-item {
     aspect-ratio: 1;
     border-radius: 10px;
@@ -326,7 +328,7 @@
     transition: background 0.2s;
   }
   .preview-item .remove-btn:hover { background: rgba(196,120,142,0.9); }
-
+ 
   .preview-item .video-badge {
     position: absolute;
     bottom: 4px;
@@ -338,7 +340,7 @@
     border-radius: 4px;
     font-family: 'Montserrat', sans-serif;
   }
-
+ 
   /* Upload button */
   .btn-upload {
     width: 100%;
@@ -376,7 +378,7 @@
     cursor: not-allowed;
     transform: none;
   }
-
+ 
   /* Progress */
   .progress-wrap {
     margin-top: 16px;
@@ -403,7 +405,7 @@
     text-align: center;
     letter-spacing: 1px;
   }
-
+ 
   /* Success state */
   .success-state {
     display: none;
@@ -451,7 +453,7 @@
     background: var(--gold);
     color: white;
   }
-
+ 
   /* Error message */
   .error-msg {
     display: none;
@@ -465,7 +467,7 @@
     margin-top: 12px;
   }
   .error-msg.visible { display: block; }
-
+ 
   /* File counter */
   .file-counter {
     font-size: 11px;
@@ -475,7 +477,7 @@
     font-weight: 500;
     letter-spacing: 1px;
   }
-
+ 
   /* Footer */
   .footer {
     margin-top: 40px;
@@ -496,12 +498,12 @@
     opacity: 0.4;
     letter-spacing: 1px;
   }
-
+ 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-
+ 
   /* Mobile tweaks */
   @media (max-width: 480px) {
     .card { padding: 28px 20px; }
@@ -510,7 +512,7 @@
 </style>
 </head>
 <body>
-
+ 
 <!-- Floating petals -->
 <div class="petal"></div>
 <div class="petal"></div>
@@ -522,44 +524,42 @@
 <div class="petal"></div>
 <div class="petal"></div>
 <div class="petal"></div>
-
+ 
 <div class="container">
-
+ 
   <div class="ornament">
     <div class="ornament-line"></div>
     <div class="ornament-diamond"></div>
     <div class="ornament-line right"></div>
   </div>
-
+ 
   <div class="header">
     <div class="xv-label">Mis XV Años</div>
     <div class="name">Camila</div>
     <div class="subtitle">Comparte tus momentos</div>
   </div>
-
+ 
   <div class="divider">
     <div class="divider-line"></div>
     <span class="divider-rose">🌸</span>
     <div class="divider-line"></div>
   </div>
-
+ 
   <div class="card">
     <div class="card-message">
       <p>Cada foto es un recuerdo para siempre.<br>¡Comparte tus mejores momentos de esta noche especial!</p>
     </div>
-
+ 
     <!-- Upload form -->
     <div id="upload-form">
-      <div class="drop-zone" id="drop-zone">
+      <label class="drop-zone" id="drop-zone" for="file-input">
         <span class="drop-icon">📸</span>
         <div class="drop-title">Sube tus fotos y videos</div>
         <div class="drop-sub">Arrastra aquí o toca para seleccionar</div>
-        <button class="btn-select" onclick="document.getElementById('file-input').click()">
-          Elegir archivos
-        </button>
+        <span class="btn-select">Elegir archivos</span>
         <input type="file" id="file-input" multiple accept="image/*,video/*">
-      </div>
-
+      </label>
+ 
       <div class="preview-section" id="preview-section">
         <div class="preview-label">Tus archivos</div>
         <div class="file-counter" id="file-counter"></div>
@@ -568,17 +568,17 @@
           ✨ Enviar mis fotos
         </button>
       </div>
-
+ 
       <div class="progress-wrap" id="progress-wrap">
         <div class="progress-bar-bg">
           <div class="progress-bar-fill" id="progress-fill"></div>
         </div>
         <div class="progress-text" id="progress-text">Subiendo...</div>
       </div>
-
+ 
       <div class="error-msg" id="error-msg"></div>
     </div>
-
+ 
     <!-- Success state -->
     <div class="success-state" id="success-state">
       <div class="success-icon">🎀</div>
@@ -587,7 +587,7 @@
       <button class="btn-more" onclick="resetForm()">Subir más fotos</button>
     </div>
   </div>
-
+ 
   <div class="footer">
     <div class="footer-ornament">
       <div class="ornament-line" style="width:30px"></div>
@@ -596,13 +596,13 @@
     </div>
     <p>XV Años Camila • Con amor 🌸</p>
   </div>
-
+ 
 </div>
-
+ 
 <script>
   const BACKEND_URL = 'https://xv-camila-1.onrender.com/upload';
   let selectedFiles = [];
-
+ 
   // Drag and drop
   const dropZone = document.getElementById('drop-zone');
   dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
@@ -612,44 +612,44 @@
     dropZone.classList.remove('dragover');
     handleFiles(Array.from(e.dataTransfer.files));
   });
-
+ 
   document.getElementById('file-input').addEventListener('change', e => {
     handleFiles(Array.from(e.target.files));
   });
-
+ 
   function handleFiles(files) {
     const allowed = files.filter(f => f.type.startsWith('image/') || f.type.startsWith('video/'));
     const rejected = files.length - allowed.length;
-
+ 
     if (rejected > 0) {
       showError(`${rejected} archivo(s) no permitido(s). Solo se aceptan fotos y videos.`);
     } else {
       hideError();
     }
-
+ 
     selectedFiles = [...selectedFiles, ...allowed].slice(0, 20);
     renderPreviews();
   }
-
+ 
   function renderPreviews() {
     const grid = document.getElementById('preview-grid');
     const section = document.getElementById('preview-section');
     const counter = document.getElementById('file-counter');
-
+ 
     grid.innerHTML = '';
-
+ 
     if (selectedFiles.length === 0) {
       section.classList.remove('visible');
       return;
     }
-
+ 
     section.classList.add('visible');
     counter.textContent = `${selectedFiles.length} archivo${selectedFiles.length > 1 ? 's' : ''} seleccionado${selectedFiles.length > 1 ? 's' : ''}`;
-
+ 
     selectedFiles.forEach((file, i) => {
       const item = document.createElement('div');
       item.className = 'preview-item';
-
+ 
       if (file.type.startsWith('image/')) {
         const img = document.createElement('img');
         img.src = URL.createObjectURL(file);
@@ -664,7 +664,7 @@
         item.appendChild(vid);
         item.appendChild(badge);
       }
-
+ 
       const btn = document.createElement('button');
       btn.className = 'remove-btn';
       btn.innerHTML = '✕';
@@ -673,29 +673,29 @@
       grid.appendChild(item);
     });
   }
-
+ 
   async function uploadFiles() {
     if (selectedFiles.length === 0) return;
-
+ 
     const btn = document.getElementById('btn-upload');
     const progressWrap = document.getElementById('progress-wrap');
     const progressFill = document.getElementById('progress-fill');
     const progressText = document.getElementById('progress-text');
-
+ 
     btn.disabled = true;
     progressWrap.classList.add('visible');
     hideError();
-
+ 
     let uploaded = 0;
-
+ 
     for (const file of selectedFiles) {
       const formData = new FormData();
       formData.append('file', file);
-
+ 
       try {
         progressText.textContent = `Subiendo ${uploaded + 1} de ${selectedFiles.length}...`;
         progressFill.style.width = `${(uploaded / selectedFiles.length) * 100}%`;
-
+ 
         const res = await fetch(BACKEND_URL, { method: 'POST', body: formData });
         if (!res.ok) throw new Error('Error al subir');
         uploaded++;
@@ -707,13 +707,13 @@
         return;
       }
     }
-
+ 
     setTimeout(() => {
       document.getElementById('upload-form').style.display = 'none';
       document.getElementById('success-state').classList.add('visible');
     }, 400);
   }
-
+ 
   function resetForm() {
     selectedFiles = [];
     document.getElementById('file-input').value = '';
@@ -726,7 +726,7 @@
     document.getElementById('success-state').classList.remove('visible');
     hideError();
   }
-
+ 
   function showError(msg) {
     const el = document.getElementById('error-msg');
     el.textContent = msg;
