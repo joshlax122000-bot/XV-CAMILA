@@ -6,383 +6,118 @@
 <title>XV Años Camila</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --gold: #c9a96e;
-    --gold-light: #e8d5b0;
-    --gold-dark: #9a7a45;
-    --rose: #e8b4c4;
-    --rose-dark: #c4788e;
-    --cream: #fdf8f2;
-    --dark: #2a1f1a;
-    --text: #4a3728;
-  }
- 
+  :root { --gold: #c9a96e; --gold-light: #e8d5b0; --gold-dark: #9a7a45; --rose: #e8b4c4; --rose-dark: #c4788e; --cream: #fdf8f2; --dark: #2a1f1a; --text: #4a3728; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
- 
-  body {
-    min-height: 100vh;
-    background-color: var(--cream);
-    font-family: 'Montserrat', sans-serif;
-    color: var(--text);
-    overflow-x: hidden;
-  }
- 
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: 
-      radial-gradient(ellipse at 20% 20%, rgba(232,180,196,0.25) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 80%, rgba(201,169,110,0.2) 0%, transparent 60%);
-    z-index: -1;
-  }
- 
-  .petal {
-    position: fixed;
-    width: 8px; height: 10px;
-    background: linear-gradient(135deg, var(--rose), var(--rose-dark));
-    border-radius: 50% 0 50% 0;
-    opacity: 0;
-    animation: fall linear infinite;
-    z-index: 0;
-    pointer-events: none;
-  }
-  .petal:nth-child(1)  { left: 5%;  animation-duration: 8s;  animation-delay: 0s; }
-  .petal:nth-child(2)  { left: 15%; animation-duration: 10s; animation-delay: 2s; background: linear-gradient(135deg, var(--gold-light), var(--gold)); }
-  .petal:nth-child(3)  { left: 25%; animation-duration: 7s;  animation-delay: 4s; }
-  .petal:nth-child(4)  { left: 40%; animation-duration: 11s; animation-delay: 1s; }
-  .petal:nth-child(5)  { left: 55%; animation-duration: 9s;  animation-delay: 3s; background: linear-gradient(135deg, var(--gold-light), var(--gold)); }
-  .petal:nth-child(6)  { left: 70%; animation-duration: 8s;  animation-delay: 5s; }
-  .petal:nth-child(7)  { left: 85%; animation-duration: 12s; animation-delay: 0.5s; }
-  .petal:nth-child(8)  { left: 92%; animation-duration: 10s; animation-delay: 2.5s; background: linear-gradient(135deg, var(--gold-light), var(--gold)); }
- 
-  @keyframes fall {
-    0%   { opacity: 0; transform: translateY(-20px) rotate(0deg); }
-    10%  { opacity: 0.7; }
-    90%  { opacity: 0.5; }
-    100% { opacity: 0; transform: translateY(100vh) rotate(360deg) translateX(30px); }
-  }
- 
-  .container {
-    position: relative;
-    z-index: 1;
-    max-width: 560px;
-    margin: 0 auto;
-    padding: 40px 24px 60px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
- 
-  .ornament {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 24px;
-    opacity: 0;
-    animation: fadeUp 1s ease 0.2s forwards;
-  }
+  body { min-height: 100vh; background-color: var(--cream); font-family: 'Montserrat', sans-serif; color: var(--text); overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse at 20% 20%, rgba(232,180,196,0.25) 0%, transparent 60%), radial-gradient(ellipse at 80% 80%, rgba(201,169,110,0.2) 0%, transparent 60%); z-index: -1; }
+  .petal { position: fixed; width: 8px; height: 10px; background: linear-gradient(135deg, var(--rose), var(--rose-dark)); border-radius: 50% 0 50% 0; opacity: 0; animation: fall linear infinite; z-index: 0; pointer-events: none; }
+  .petal:nth-child(1) { left: 5%;  animation-duration: 8s;  animation-delay: 0s; }
+  .petal:nth-child(2) { left: 15%; animation-duration: 10s; animation-delay: 2s; background: linear-gradient(135deg, var(--gold-light), var(--gold)); }
+  .petal:nth-child(3) { left: 25%; animation-duration: 7s;  animation-delay: 4s; }
+  .petal:nth-child(4) { left: 40%; animation-duration: 11s; animation-delay: 1s; }
+  .petal:nth-child(5) { left: 55%; animation-duration: 9s;  animation-delay: 3s; background: linear-gradient(135deg, var(--gold-light), var(--gold)); }
+  .petal:nth-child(6) { left: 70%; animation-duration: 8s;  animation-delay: 5s; }
+  .petal:nth-child(7) { left: 85%; animation-duration: 12s; animation-delay: 0.5s; }
+  .petal:nth-child(8) { left: 92%; animation-duration: 10s; animation-delay: 2.5s; background: linear-gradient(135deg, var(--gold-light), var(--gold)); }
+  @keyframes fall { 0% { opacity: 0; transform: translateY(-20px) rotate(0deg); } 10% { opacity: 0.7; } 90% { opacity: 0.5; } 100% { opacity: 0; transform: translateY(100vh) rotate(360deg) translateX(30px); } }
+  .container { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; padding: 40px 24px 60px; display: flex; flex-direction: column; align-items: center; }
+  .ornament { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; opacity: 0; animation: fadeUp 1s ease 0.2s forwards; }
   .ornament-line { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
   .ornament-line.right { background: linear-gradient(90deg, var(--gold), transparent); }
   .ornament-diamond { width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); }
- 
-  .header {
-    text-align: center;
-    margin-bottom: 36px;
-    opacity: 0;
-    animation: fadeUp 1s ease 0.4s forwards;
-  }
-  .xv-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 6px; text-transform: uppercase;
-    color: var(--gold-dark); margin-bottom: 8px;
-  }
-  .name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(52px, 12vw, 80px);
-    font-weight: 300; font-style: italic;
-    line-height: 1; margin-bottom: 6px;
-    background: linear-gradient(135deg, var(--dark) 0%, var(--gold-dark) 50%, var(--dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .subtitle {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 16px; font-style: italic;
-    color: var(--gold-dark); letter-spacing: 2px;
-  }
- 
-  .divider {
-    display: flex; align-items: center; gap: 16px;
-    margin: 28px 0; width: 100%;
-    opacity: 0; animation: fadeUp 1s ease 0.6s forwards;
-  }
+  .header { text-align: center; margin-bottom: 36px; opacity: 0; animation: fadeUp 1s ease 0.4s forwards; }
+  .xv-label { font-size: 11px; font-weight: 500; letter-spacing: 6px; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 8px; }
+  .name { font-family: 'Cormorant Garamond', serif; font-size: clamp(52px, 12vw, 80px); font-weight: 300; font-style: italic; line-height: 1; margin-bottom: 6px; background: linear-gradient(135deg, var(--dark) 0%, var(--gold-dark) 50%, var(--dark) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .subtitle { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic; color: var(--gold-dark); letter-spacing: 2px; }
+  .divider { display: flex; align-items: center; gap: 16px; margin: 28px 0; width: 100%; opacity: 0; animation: fadeUp 1s ease 0.6s forwards; }
   .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-light), transparent); }
   .divider-rose { font-size: 18px; color: var(--rose-dark); }
- 
-  .card {
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(201,169,110,0.3);
-    border-radius: 24px;
-    padding: 40px 32px;
-    width: 100%;
-    box-shadow: 0 4px 24px rgba(42,31,26,0.08), 0 1px 0 rgba(255,255,255,0.9) inset;
-    opacity: 0;
-    animation: fadeUp 1s ease 0.8s forwards;
-  }
- 
-  .card-message {
-    text-align: center; margin-bottom: 28px;
-  }
-  .card-message p {
-    font-size: 13px; font-weight: 300; line-height: 1.7;
-    color: var(--text); opacity: 0.8;
-  }
- 
-  /* Drop zone — solo visual, no es clickeable */
-  .drop-zone {
-    border: 2px dashed rgba(201,169,110,0.5);
-    border-radius: 16px;
-    padding: 32px 24px;
-    text-align: center;
-    background: rgba(253,248,242,0.5);
-    margin-bottom: 0;
-  }
-  .drop-icon {
-    font-size: 40px; margin-bottom: 12px; display: block;
-    animation: float 3s ease-in-out infinite;
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-6px); }
-  }
-  .drop-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px; font-weight: 400;
-    color: var(--dark); margin-bottom: 6px;
-  }
-  .drop-sub {
-    font-size: 12px; font-weight: 300;
-    color: var(--text); opacity: 0.6; margin-bottom: 20px;
-  }
- 
-  /* Botón principal de selección — elemento independiente */
-  .btn-select {
-    display: block;
-    width: 100%;
-    padding: 14px 28px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    color: white;
-    border: none;
-    border-radius: 100px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 13px; font-weight: 500;
-    letter-spacing: 2px; text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 16px rgba(154,122,69,0.35);
-    margin-top: 16px;
-    -webkit-appearance: none;
-    touch-action: manipulation;
-  }
-  .btn-select:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 24px rgba(154,122,69,0.45);
-  }
+  .card { background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); border: 1px solid rgba(201,169,110,0.3); border-radius: 24px; padding: 40px 32px; width: 100%; box-shadow: 0 4px 24px rgba(42,31,26,0.08); opacity: 0; animation: fadeUp 1s ease 0.8s forwards; }
+  .card-message { text-align: center; margin-bottom: 28px; }
+  .card-message p { font-size: 13px; font-weight: 300; line-height: 1.7; color: var(--text); opacity: 0.8; }
+  .drop-zone { border: 2px dashed rgba(201,169,110,0.5); border-radius: 16px; padding: 32px 24px; text-align: center; background: rgba(253,248,242,0.5); }
+  .drop-icon { font-size: 40px; margin-bottom: 12px; display: block; animation: float 3s ease-in-out infinite; }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  .drop-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--dark); margin-bottom: 6px; }
+  .drop-sub { font-size: 12px; font-weight: 300; color: var(--text); opacity: 0.6; }
+  .btn-select { display: block; width: 100%; padding: 14px 28px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: white; border: none; border-radius: 100px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(154,122,69,0.35); margin-top: 16px; touch-action: manipulation; }
   .btn-select:active { transform: scale(0.98); }
- 
-  /* Input oculto correctamente */
-  #file-input {
-    position: absolute;
-    width: 1px; height: 1px;
-    opacity: 0; overflow: hidden;
-    clip: rect(0,0,0,0);
-    white-space: nowrap;
-  }
- 
-  /* Preview */
+  #file-input { position: fixed; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; }
   .preview-section { margin-top: 24px; display: none; }
   .preview-section.visible { display: block; }
-  .preview-label {
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 3px; text-transform: uppercase;
-    color: var(--gold-dark); margin-bottom: 6px; text-align: center;
-  }
-  .file-counter {
-    font-size: 11px; color: var(--gold-dark);
-    text-align: center; margin-bottom: 12px;
-    font-weight: 500; letter-spacing: 1px;
-  }
-  .preview-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px; margin-bottom: 20px;
-  }
-  .preview-item {
-    aspect-ratio: 1; border-radius: 10px;
-    overflow: hidden; position: relative;
-    border: 1px solid rgba(201,169,110,0.2);
-  }
-  .preview-item img, .preview-item video {
-    width: 100%; height: 100%; object-fit: cover;
-  }
-  .preview-item .remove-btn {
-    position: absolute; top: 4px; right: 4px;
-    width: 20px; height: 20px;
-    background: rgba(42,31,26,0.7); color: white;
-    border: none; border-radius: 50%;
-    font-size: 11px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .preview-item .video-badge {
-    position: absolute; bottom: 4px; left: 4px;
-    background: rgba(42,31,26,0.7); color: white;
-    font-size: 9px; padding: 2px 6px; border-radius: 4px;
-  }
- 
-  .btn-upload {
-    width: 100%; padding: 16px;
-    background: linear-gradient(135deg, var(--rose-dark), var(--gold-dark));
-    color: white; border: none; border-radius: 14px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 13px; font-weight: 500;
-    letter-spacing: 3px; text-transform: uppercase;
-    cursor: pointer; transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(196,120,142,0.4);
-    touch-action: manipulation;
-  }
-  .btn-upload:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(196,120,142,0.5); }
-  .btn-upload:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
- 
+  .preview-label { font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 6px; text-align: center; }
+  .file-counter { font-size: 11px; color: var(--gold-dark); text-align: center; margin-bottom: 12px; font-weight: 500; }
+  .preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
+  .preview-item { aspect-ratio: 1; border-radius: 10px; overflow: hidden; position: relative; border: 1px solid rgba(201,169,110,0.2); }
+  .preview-item img, .preview-item video { width: 100%; height: 100%; object-fit: cover; }
+  .preview-item .remove-btn { position: absolute; top: 4px; right: 4px; width: 20px; height: 20px; background: rgba(42,31,26,0.7); color: white; border: none; border-radius: 50%; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .preview-item .video-badge { position: absolute; bottom: 4px; left: 4px; background: rgba(42,31,26,0.7); color: white; font-size: 9px; padding: 2px 6px; border-radius: 4px; }
+  .btn-upload { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--rose-dark), var(--gold-dark)); color: white; border: none; border-radius: 14px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(196,120,142,0.4); touch-action: manipulation; }
+  .btn-upload:disabled { opacity: 0.6; cursor: not-allowed; }
   .progress-wrap { margin-top: 16px; display: none; }
   .progress-wrap.visible { display: block; }
-  .progress-bar-bg {
-    background: rgba(201,169,110,0.15);
-    border-radius: 100px; height: 6px; overflow: hidden; margin-bottom: 8px;
-  }
-  .progress-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--rose-dark), var(--gold));
-    border-radius: 100px; width: 0%; transition: width 0.4s ease;
-  }
+  .progress-bar-bg { background: rgba(201,169,110,0.15); border-radius: 100px; height: 6px; overflow: hidden; margin-bottom: 8px; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--rose-dark), var(--gold)); border-radius: 100px; width: 0%; transition: width 0.3s ease; }
   .progress-text { font-size: 11px; color: var(--gold-dark); text-align: center; letter-spacing: 1px; }
- 
   .success-state { display: none; text-align: center; padding: 20px 0; }
   .success-state.visible { display: block; }
   .success-icon { font-size: 48px; margin-bottom: 12px; animation: popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275); }
   @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
   .success-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-style: italic; color: var(--dark); margin-bottom: 8px; }
   .success-sub { font-size: 12px; color: var(--text); opacity: 0.7; margin-bottom: 20px; }
-  .btn-more {
-    padding: 10px 28px; background: transparent;
-    border: 1px solid var(--gold); color: var(--gold-dark);
-    border-radius: 100px; font-family: 'Montserrat', sans-serif;
-    font-size: 11px; font-weight: 500; letter-spacing: 2px;
-    text-transform: uppercase; cursor: pointer; transition: all 0.3s;
-  }
+  .btn-more { padding: 10px 28px; background: transparent; border: 1px solid var(--gold); color: var(--gold-dark); border-radius: 100px; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
   .btn-more:hover { background: var(--gold); color: white; }
- 
-  .error-msg {
-    display: none;
-    background: rgba(196,120,142,0.1);
-    border: 1px solid rgba(196,120,142,0.3);
-    border-radius: 10px; padding: 12px 16px;
-    font-size: 12px; color: var(--rose-dark);
-    text-align: center; margin-top: 12px;
-  }
+  .error-msg { display: none; background: rgba(196,120,142,0.1); border: 1px solid rgba(196,120,142,0.3); border-radius: 10px; padding: 12px 16px; font-size: 12px; color: var(--rose-dark); text-align: center; margin-top: 12px; }
   .error-msg.visible { display: block; }
- 
-  .footer {
-    margin-top: 40px; text-align: center;
-    opacity: 0; animation: fadeUp 1s ease 1s forwards;
-  }
+  .footer { margin-top: 40px; text-align: center; opacity: 0; animation: fadeUp 1s ease 1s forwards; }
   .footer-ornament { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px; }
   .footer p { font-size: 11px; color: var(--text); opacity: 0.4; letter-spacing: 1px; }
- 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
- 
-  @media (max-width: 480px) {
-    .card { padding: 28px 20px; }
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 480px) { .card { padding: 28px 20px; } }
 </style>
 </head>
 <body>
  
-<div class="petal"></div>
-<div class="petal"></div>
-<div class="petal"></div>
-<div class="petal"></div>
-<div class="petal"></div>
-<div class="petal"></div>
-<div class="petal"></div>
-<div class="petal"></div>
+<div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
+<div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
  
-<!-- Input FUERA de cualquier contenedor problemático -->
 <input type="file" id="file-input" multiple accept="image/*,video/*" style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;">
  
 <div class="container">
- 
   <div class="ornament">
-    <div class="ornament-line"></div>
-    <div class="ornament-diamond"></div>
-    <div class="ornament-line right"></div>
+    <div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line right"></div>
   </div>
- 
   <div class="header">
     <div class="xv-label">Mis XV Años</div>
     <div class="name">Camila</div>
     <div class="subtitle">Comparte tus momentos</div>
   </div>
- 
   <div class="divider">
-    <div class="divider-line"></div>
-    <span class="divider-rose">🌸</span>
-    <div class="divider-line"></div>
+    <div class="divider-line"></div><span class="divider-rose">🌸</span><div class="divider-line"></div>
   </div>
- 
   <div class="card">
     <div class="card-message">
       <p>Cada foto es un recuerdo para siempre.<br>¡Comparte tus mejores momentos de esta noche especial!</p>
     </div>
- 
     <div id="upload-form">
- 
       <div class="drop-zone" id="drop-zone">
         <span class="drop-icon">📸</span>
         <div class="drop-title">Sube tus fotos y videos</div>
         <div class="drop-sub">Solo se permiten fotos y videos</div>
       </div>
- 
-      <!-- Botón independiente del drop zone -->
-      <button type="button" class="btn-select" id="btn-select">
-        📁 Elegir archivos
-      </button>
- 
+      <button type="button" class="btn-select" id="btn-select">📁 Elegir archivos</button>
       <div class="preview-section" id="preview-section">
         <div class="preview-label" style="margin-top:20px">Tus archivos</div>
         <div class="file-counter" id="file-counter"></div>
         <div class="preview-grid" id="preview-grid"></div>
-        <button type="button" class="btn-upload" id="btn-upload">
-          ✨ Enviar mis fotos
-        </button>
+        <button type="button" class="btn-upload" id="btn-upload">✨ Enviar mis fotos</button>
       </div>
- 
       <div class="progress-wrap" id="progress-wrap">
-        <div class="progress-bar-bg">
-          <div class="progress-bar-fill" id="progress-fill"></div>
-        </div>
-        <div class="progress-text" id="progress-text">Subiendo...</div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill"></div></div>
+        <div class="progress-text" id="progress-text">Preparando...</div>
       </div>
- 
       <div class="error-msg" id="error-msg"></div>
     </div>
- 
     <div class="success-state" id="success-state">
       <div class="success-icon">🎀</div>
       <div class="success-title">¡Gracias por compartir!</div>
@@ -390,7 +125,6 @@
       <button type="button" class="btn-more" id="btn-more">Subir más fotos</button>
     </div>
   </div>
- 
   <div class="footer">
     <div class="footer-ornament">
       <div class="ornament-line" style="width:30px"></div>
@@ -399,96 +133,61 @@
     </div>
     <p>XV Años Camila • Con amor 🌸</p>
   </div>
- 
 </div>
  
 <script>
-  const BACKEND_URL = 'https://xv-camila-1.onrender.com/upload';
+  const SERVER = 'https://xv-camila-1.onrender.com';
   let selectedFiles = [];
  
-  // ── Abrir selector de archivos ──────────────────────────────────────────────
+  // ── Selector ────────────────────────────────────────────────────────────────
   const fileInput = document.getElementById('file-input');
-  const btnSelect = document.getElementById('btn-select');
- 
-  btnSelect.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    fileInput.click();
+  document.getElementById('btn-select').addEventListener('click', e => { e.preventDefault(); fileInput.click(); });
+  fileInput.addEventListener('change', e => {
+    if (e.target.files?.length > 0) { handleFiles(Array.from(e.target.files)); fileInput.value = ''; }
   });
  
-  fileInput.addEventListener('change', function(e) {
-    if (e.target.files && e.target.files.length > 0) {
-      handleFiles(Array.from(e.target.files));
-      // Reset para que se pueda volver a seleccionar los mismos archivos
-      fileInput.value = '';
-    }
-  });
- 
-  // ── Drag and drop (desktop) ─────────────────────────────────────────────────
   const dropZone = document.getElementById('drop-zone');
   dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.borderColor = 'var(--gold)'; });
-  dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = ''; });
-  dropZone.addEventListener('drop', e => {
-    e.preventDefault();
-    dropZone.style.borderColor = '';
-    handleFiles(Array.from(e.dataTransfer.files));
-  });
+  dropZone.addEventListener('dragleave', () => dropZone.style.borderColor = '');
+  dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.style.borderColor = ''; handleFiles(Array.from(e.dataTransfer.files)); });
  
-  // ── Procesar archivos seleccionados ─────────────────────────────────────────
   function handleFiles(files) {
     const allowed = files.filter(f => f.type.startsWith('image/') || f.type.startsWith('video/'));
-    const rejected = files.length - allowed.length;
-    if (rejected > 0) {
-      showError(`${rejected} archivo(s) rechazado(s). Solo se permiten fotos y videos.`);
-    } else {
-      hideError();
-    }
+    if (files.length !== allowed.length) showError(`${files.length - allowed.length} archivo(s) no permitido(s).`);
+    else hideError();
     selectedFiles = [...selectedFiles, ...allowed].slice(0, 20);
     renderPreviews();
   }
  
-  // ── Mostrar previews ────────────────────────────────────────────────────────
   function renderPreviews() {
     const grid = document.getElementById('preview-grid');
     const section = document.getElementById('preview-section');
     const counter = document.getElementById('file-counter');
     grid.innerHTML = '';
-    if (selectedFiles.length === 0) { section.classList.remove('visible'); return; }
+    if (!selectedFiles.length) { section.classList.remove('visible'); return; }
     section.classList.add('visible');
     counter.textContent = `${selectedFiles.length} archivo${selectedFiles.length !== 1 ? 's' : ''} seleccionado${selectedFiles.length !== 1 ? 's' : ''}`;
     selectedFiles.forEach((file, i) => {
       const item = document.createElement('div');
       item.className = 'preview-item';
       if (file.type.startsWith('image/')) {
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(file);
-        item.appendChild(img);
+        const img = document.createElement('img'); img.src = URL.createObjectURL(file); item.appendChild(img);
       } else {
-        const vid = document.createElement('video');
-        vid.src = URL.createObjectURL(file);
-        vid.muted = true;
-        const badge = document.createElement('div');
-        badge.className = 'video-badge';
-        badge.textContent = '▶ Video';
-        item.appendChild(vid);
-        item.appendChild(badge);
+        const vid = document.createElement('video'); vid.src = URL.createObjectURL(file); vid.muted = true; item.appendChild(vid);
+        const badge = document.createElement('div'); badge.className = 'video-badge'; badge.textContent = '▶ Video'; item.appendChild(badge);
       }
-      const btn = document.createElement('button');
-      btn.className = 'remove-btn';
-      btn.innerHTML = '✕';
-      btn.type = 'button';
+      const btn = document.createElement('button'); btn.className = 'remove-btn'; btn.innerHTML = '✕'; btn.type = 'button';
       btn.onclick = () => { selectedFiles.splice(i, 1); renderPreviews(); };
-      item.appendChild(btn);
-      grid.appendChild(item);
+      item.appendChild(btn); grid.appendChild(item);
     });
   }
  
-  // ── Subir archivos ──────────────────────────────────────────────────────────
+  // ── Subida directa a Drive ──────────────────────────────────────────────────
   document.getElementById('btn-upload').addEventListener('click', uploadFiles);
   document.getElementById('btn-more').addEventListener('click', resetForm);
  
   async function uploadFiles() {
-    if (selectedFiles.length === 0) return;
+    if (!selectedFiles.length) return;
     const btn = document.getElementById('btn-upload');
     const progressWrap = document.getElementById('progress-wrap');
     const progressFill = document.getElementById('progress-fill');
@@ -496,32 +195,59 @@
     btn.disabled = true;
     progressWrap.classList.add('visible');
     hideError();
-    let uploaded = 0;
-    for (const file of selectedFiles) {
-      const formData = new FormData();
-      formData.append('file', file);
+ 
+    for (let i = 0; i < selectedFiles.length; i++) {
+      const file = selectedFiles[i];
+      const fileSizeMB = (file.size / (1024 * 1024)).toFixed(1);
       try {
-        progressText.textContent = `Subiendo ${uploaded + 1} de ${selectedFiles.length}...`;
-        progressFill.style.width = `${(uploaded / selectedFiles.length) * 100}%`;
-        const res = await fetch(BACKEND_URL, { method: 'POST', body: formData });
+        // 1. Pedir URL de subida al servidor
+        progressText.textContent = `Preparando archivo ${i + 1} de ${selectedFiles.length}...`;
+        progressFill.style.width = `${(i / selectedFiles.length) * 100}%`;
+ 
+        const res = await fetch(`${SERVER}/get-upload-url`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fileName: file.name, mimeType: file.type, fileSize: file.size }),
+        });
+ 
         if (!res.ok) {
-          // Mostrar el error exacto del servidor
-          let errMsg = `Error del servidor (${res.status})`;
-          try {
-            const errData = await res.json();
-            errMsg = errData.error || errMsg;
-          } catch(_) {}
-          throw new Error(errMsg);
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || `Error ${res.status}`);
         }
-        uploaded++;
-        progressFill.style.width = `${(uploaded / selectedFiles.length) * 100}%`;
+ 
+        const { uploadUrl } = await res.json();
+ 
+        // 2. Subir directo a Drive con barra de progreso
+        await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('PUT', uploadUrl);
+          xhr.setRequestHeader('Content-Type', file.type);
+          xhr.upload.onprogress = e => {
+            if (e.lengthComputable) {
+              const fileProgress = e.loaded / e.total;
+              const totalProgress = ((i + fileProgress) / selectedFiles.length) * 100;
+              progressFill.style.width = `${totalProgress}%`;
+              const loaded = (e.loaded / (1024 * 1024)).toFixed(1);
+              progressText.textContent = `Subiendo ${i + 1}/${selectedFiles.length}: ${loaded}MB / ${fileSizeMB}MB`;
+            }
+          };
+          xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) resolve();
+            else reject(new Error(`Error al subir (${xhr.status})`));
+          };
+          xhr.onerror = () => reject(new Error('Error de red. Verifica tu conexión.'));
+          xhr.send(file);
+        });
+ 
       } catch (err) {
-        showError(`Error: ${err.message}. Revisa la configuración del servidor.`);
+        showError(`Error: ${err.message}`);
         btn.disabled = false;
         progressWrap.classList.remove('visible');
         return;
       }
     }
+ 
+    progressFill.style.width = '100%';
     setTimeout(() => {
       document.getElementById('upload-form').style.display = 'none';
       document.getElementById('success-state').classList.add('visible');
@@ -540,14 +266,9 @@
     hideError();
   }
  
-  function showError(msg) {
-    const el = document.getElementById('error-msg');
-    el.textContent = msg;
-    el.classList.add('visible');
-  }
-  function hideError() {
-    document.getElementById('error-msg').classList.remove('visible');
-  }
+  function showError(msg) { const el = document.getElementById('error-msg'); el.textContent = msg; el.classList.add('visible'); }
+  function hideError() { document.getElementById('error-msg').classList.remove('visible'); }
 </script>
 </body>
 </html>
+ 
