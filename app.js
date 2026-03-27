@@ -3,13 +3,13 @@ const multer = require('multer');
 const { google } = require('googleapis');
 const path = require('path');
 const cors = require('cors');
-
+ 
 const app = express();
 const PORT = process.env.PORT || 10000;
-
+ 
 // ─── Configuración de Google Drive ───────────────────────────────────────────
 const FOLDER_ID = process.env.DRIVE_FOLDER_ID;
-
+ 
 const auth = new google.auth.GoogleAuth({
   credentials: {
     type: 'service_account',
@@ -21,16 +21,16 @@ const auth = new google.auth.GoogleAuth({
     auth_uri: 'https://accounts.google.com/o/oauth2/auth',
     token_uri: 'https://oauth2.googleapis.com/token',
   },
-  scopes: ['https://www.googleapis.com/auth/drive.file'],
+  scopes: ['https://www.googleapis.com/auth/drive'],
 });
-
+ 
 const drive = google.drive({ version: 'v3', auth });
-
+ 
 // ─── Middleware ───────────────────────────────────────────────────────────────
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
-
+ 
 // ─── Multer (memoria, sin guardar en disco) ───────────────────────────────────
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -44,27 +44,29 @@ const upload = multer({
     }
   },
 });
-
+ 
 // ─── Ruta principal: sirve la página ─────────────────────────────────────────
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
-
+ 
 // ─── Ruta de subida a Drive ───────────────────────────────────────────────────
 app.post('/upload', upload.single('file'), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No se recibió ningún archivo' });
   }
-
+ 
   try {
     const { Readable } = require('stream');
     const stream = Readable.from(req.file.buffer);
-
+ 
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const ext = path.extname(req.file.originalname) || '';
     const fileName = `foto_${timestamp}${ext}`;
-
+ 
     const response = await drive.files.create({
+      // supportsAllDrives permite trabajar con carpetas compartidas entre cuentas
+      supportsAllDrives: true,
       requestBody: {
         name: fileName,
         parents: [FOLDER_ID],
@@ -75,23 +77,23 @@ app.post('/upload', upload.single('file'), async (req, res) => {
       },
       fields: 'id, name',
     });
-
+ 
     console.log(`✅ Archivo subido: ${response.data.name} (${response.data.id})`);
     res.json({ success: true, fileId: response.data.id, fileName: response.data.name });
-
+ 
   } catch (error) {
     console.error('❌ Error al subir a Drive:', error.message);
-    res.status(500).json({ error: 'Error al subir el archivo a Drive' });
+    res.status(500).json({ error: error.message });
   }
 });
-
+ 
 // ─── Webhook de WhatsApp (mantiene tu configuración anterior) ─────────────────
 app.get('/webhook', (req, res) => {
   const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
   const mode = req.query['hub.mode'];
   const token = req.query['hub.verify_token'];
   const challenge = req.query['hub.challenge'];
-
+ 
   if (mode === 'subscribe' && token === VERIFY_TOKEN) {
     console.log('✅ Webhook verificado');
     res.status(200).send(challenge);
@@ -99,14 +101,15 @@ app.get('/webhook', (req, res) => {
     res.sendStatus(403);
   }
 });
-
+ 
 app.post('/webhook', (req, res) => {
   console.log('📩 Webhook recibido:', JSON.stringify(req.body, null, 2));
   res.sendStatus(200);
 });
-
+ 
 // ─── Server ───────────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
   console.log(`📁 Folder ID de Drive: ${FOLDER_ID}`);
 });
+ 
