@@ -1,9 +1,9 @@
 const express = require('express');
+const multer = require('multer');
 const { google } = require('googleapis');
 const path = require('path');
 const cors = require('cors');
 const fs = require('fs');
-const busboy = require('busboy');
  
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -40,19 +40,26 @@ async function saveTokens(newTokens) {
   tokens = { ...tokens, ...newTokens };
   oauth2Client.setCredentials(tokens);
   try { fs.writeFileSync(TOKEN_FILE, JSON.stringify(tokens)); } catch(e) {}
-  console.log('✅ Tokens actualizados');
  
+  // Persistir en Render
   try {
     const serviceId = process.env.RENDER_SERVICE_ID;
     const renderApiKey = process.env.RENDER_API_KEY;
     if (serviceId && renderApiKey) {
-      const res = await fetch(`https://api.render.com/v1/services/${serviceId}/env-vars`, {
+      const current = await fetch(`https://api.render.com/v1/services/${serviceId}/env-vars`, {
+        headers: { 'Authorization': `Bearer ${renderApiKey}` }
+      });
+      const envVars = await current.json();
+      const others = Array.isArray(envVars) 
+        ? envVars.filter(v => v.envVar?.key !== 'GOOGLE_TOKENS').map(v => ({ key: v.envVar.key, value: v.envVar.value }))
+        : [];
+      others.push({ key: 'GOOGLE_TOKENS', value: JSON.stringify(tokens) });
+      await fetch(`https://api.render.com/v1/services/${serviceId}/env-vars`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${renderApiKey}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify([{ key: 'GOOGLE_TOKENS', value: JSON.stringify(tokens) }]),
+        body: JSON.stringify(others),
       });
-      if (res.ok) console.log('✅ Tokens persistidos en Render');
-      else console.log('⚠️ Error persistiendo:', await res.text());
+      console.log('✅ Tokens persistidos en Render');
     }
   } catch (e) {
     console.log('⚠️ Error Render API:', e.message);
@@ -69,6 +76,26 @@ const FOLDER_ID = process.env.DRIVE_FOLDER_ID;
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
+ 
+// ─── Multer — guarda en disco temporal para no usar RAM ───────────────────────
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, '/tmp'),
+  filename: (req, file, cb) => {
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const ext = path.extname(file.originalname) || '';
+    const tipo = file.mimetype.startsWith('video/') ? 'video' : 'foto';
+    cb(null, `${tipo}_${timestamp}${ext}`);
+  }
+});
+ 
+const upload = multer({
+  storage,
+  fileFilter: (req, file, cb) => {
+    const allowed = /image\/(jpeg|jpg|png|gif|webp|heic|heif)|video\/(mp4|mov|avi|mkv|quicktime)/;
+    if (allowed.test(file.mimetype)) cb(null, true);
+    else cb(new Error('Solo se permiten fotos y videos'), false);
+  },
+});
  
 // ─── Ruta principal ───────────────────────────────────────────────────────────
 app.get('/', (req, res) => {
@@ -101,49 +128,36 @@ app.get('/oauth2callback', async (req, res) => {
   }
 });
  
-// ─── Subida con streaming (no carga el archivo completo en RAM) ───────────────
-app.post('/upload', (req, res) => {
+// ─── Subida a Drive via disco temporal (no usa RAM) ──────────────────────────
+app.post('/upload', upload.single('file'), async (req, res) => {
+  if (!req.file) return res.status(400).json({ error: 'No se recibió ningún archivo' });
   if (!tokens) return res.status(401).json({ error: 'Drive no autorizado. Visita /auth' });
  
-  const bb = busboy({ headers: req.headers, limits: { fileSize: 4 * 1024 * 1024 * 1024 } });
+  const filePath = req.file.path;
  
-  bb.on('file', async (name, fileStream, info) => {
-    const { filename, mimeType } = info;
-    const isVideo = mimeType.startsWith('video/');
-    const isImage = mimeType.startsWith('image/');
+  try {
+    const sizeMB = (req.file.size / (1024 * 1024)).toFixed(1);
+    console.log(`📤 Subiendo ${req.file.filename} (${sizeMB}MB) a Drive...`);
  
-    if (!isVideo && !isImage) {
-      fileStream.resume();
-      return res.status(400).json({ error: 'Solo se permiten fotos y videos' });
-    }
+    // Leer desde disco como stream — sin cargar en RAM
+    const fileStream = fs.createReadStream(filePath);
  
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const ext = path.extname(filename) || (isVideo ? '.mp4' : '.jpg');
-    const finalName = `${isVideo ? 'video' : 'foto'}_${timestamp}${ext}`;
+    const response = await drive.files.create({
+      requestBody: { name: req.file.filename, parents: [FOLDER_ID] },
+      media: { mimeType: req.file.mimetype, body: fileStream },
+      fields: 'id, name',
+    });
  
-    console.log(`📤 Streaming ${finalName} a Drive...`);
+    console.log(`✅ Subido: ${response.data.name}`);
+    res.json({ success: true, fileId: response.data.id, fileName: response.data.name });
  
-    try {
-      const response = await drive.files.create({
-        requestBody: { name: finalName, parents: [FOLDER_ID] },
-        media: { mimeType, body: fileStream },
-        fields: 'id, name',
-      });
- 
-      console.log(`✅ Subido: ${response.data.name}`);
-      res.json({ success: true, fileId: response.data.id, fileName: response.data.name });
-    } catch (error) {
-      console.error('❌ Error streaming a Drive:', error.message);
-      if (!res.headersSent) res.status(500).json({ error: error.message });
-    }
-  });
- 
-  bb.on('error', (err) => {
-    console.error('❌ Error busboy:', err.message);
-    if (!res.headersSent) res.status(500).json({ error: err.message });
-  });
- 
-  req.pipe(bb);
+  } catch (error) {
+    console.error('❌ Error:', error.message);
+    res.status(500).json({ error: error.message });
+  } finally {
+    // Eliminar archivo temporal del disco
+    try { fs.unlinkSync(filePath); } catch(e) {}
+  }
 });
  
 // ─── Webhook WhatsApp ─────────────────────────────────────────────────────────
