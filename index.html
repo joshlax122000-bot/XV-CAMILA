@@ -186,6 +186,20 @@
   document.getElementById('btn-upload').addEventListener('click', uploadFiles);
   document.getElementById('btn-more').addEventListener('click', resetForm);
  
+  // Espera a que el servidor despierte (hasta 90 segundos)
+  async function waitForServer() {
+    const progressText = document.getElementById('progress-text');
+    for (let attempt = 1; attempt <= 18; attempt++) {
+      try {
+        progressText.textContent = 'Conectando con el servidor (' + attempt + '/18)...';
+        const res = await fetch(SERVER + '/', { method: 'GET', signal: AbortSignal.timeout(8000) });
+        if (res.ok) return true;
+      } catch (e) { /* sigue intentando */ }
+      await new Promise(r => setTimeout(r, 5000));
+    }
+    throw new Error('El servidor no responde. Intenta de nuevo en unos segundos.');
+  }
+ 
   async function uploadFiles() {
     if (!selectedFiles.length) return;
     const btn = document.getElementById('btn-upload');
@@ -195,6 +209,17 @@
     btn.disabled = true;
     progressWrap.classList.add('visible');
     hideError();
+ 
+    // Despertar el servidor antes de subir
+    try {
+      progressText.textContent = 'Conectando...';
+      await waitForServer();
+    } catch (err) {
+      showError(err.message);
+      btn.disabled = false;
+      progressWrap.classList.remove('visible');
+      return;
+    }
  
     for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
