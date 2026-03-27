@@ -195,22 +195,47 @@
  
     for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
-      const sizeMB = (file.size / (1024 * 1024)).toFixed(1);
+      const totalMB = (file.size / (1024 * 1024)).toFixed(1);
       try {
-        progressText.textContent = `Subiendo ${i + 1} de ${selectedFiles.length} (${sizeMB}MB)...`;
-        progressFill.style.width = `${(i / selectedFiles.length) * 100}%`;
+        await new Promise((resolve, reject) => {
+          const formData = new FormData();
+          formData.append('file', file);
  
-        const formData = new FormData();
-        formData.append('file', file);
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', SERVER + '/upload');
  
-        const res = await fetch(`${SERVER}/upload`, { method: 'POST', body: formData });
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({}));
-          throw new Error(data.error || `Error ${res.status}`);
-        }
-        progressFill.style.width = `${((i + 1) / selectedFiles.length) * 100}%`;
+          xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable) {
+              const loadedMB = (e.loaded / (1024 * 1024)).toFixed(1);
+              const fileProgress = e.loaded / e.total;
+              const totalProgress = ((i + fileProgress) / selectedFiles.length) * 100;
+              progressFill.style.width = totalProgress + '%';
+              progressText.textContent = 'Archivo ' + (i+1) + '/' + selectedFiles.length + ' — ' + loadedMB + ' MB / ' + totalMB + ' MB';
+            }
+          };
+ 
+          xhr.onload = async () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              progressFill.style.width = (((i + 1) / selectedFiles.length) * 100) + '%';
+              resolve();
+            } else {
+              try {
+                const data = JSON.parse(xhr.responseText);
+                reject(new Error(data.error || 'Error ' + xhr.status));
+              } catch(e) {
+                reject(new Error('Error ' + xhr.status));
+              }
+            }
+          };
+ 
+          xhr.onerror = () => reject(new Error('Error de red. Verifica tu conexión.'));
+          xhr.ontimeout = () => reject(new Error('Tiempo de espera agotado.'));
+          xhr.timeout = 30 * 60 * 1000; // 30 minutos máximo
+ 
+          xhr.send(formData);
+        });
       } catch (err) {
-        showError(`Error: ${err.message}`);
+        showError('Error: ' + err.message);
         btn.disabled = false; progressWrap.classList.remove('visible'); return;
       }
     }
